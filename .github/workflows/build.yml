@@ -1,4 +1,4 @@
-name: 
+name: build
 on: [push, workflow_dispatch]
 jobs:
   build:
@@ -6,6 +6,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: unzip -q project.zip
+      - run: sed -i 's/inlineHook.h/inlinehook.h/' jni/util/inlinehook.cpp
       - run: $ANDROID_NDK_HOME/ndk-build NDK_PROJECT_PATH=. APP_BUILD_SCRIPT=jni/Android.mk NDK_APPLICATION_MK=jni/Application.mk
       - uses: actions/upload-artifact@v4
         with:
